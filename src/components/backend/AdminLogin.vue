@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 头像区 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt="avatar" />
+        <img src="../../assets/logo.png" alt="avatar" />
       </div>
       <!-- 登录表单 -->
       <div>
@@ -26,7 +26,7 @@
           </el-form-item>
           <el-form-item class="btns">
             <el-button type="primary" @click="login">登录</el-button>
-            <el-button type="info" @click="resetLoginForm">重置</el-button>
+            <el-button type="primary" @click="resetLoginForm">注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -66,18 +66,17 @@ export default {
       // 表单预验证
       // valid：bool类型
       this.$refs.loginFormRef.validate(async valid => {
-        // console.log(valid)
         if (!valid) return false
         // this.$http.post('login', this.loginForm): 返回值为promise
         // 返回值为promise，可加await简化操作 相应的也要加async
-        const { data: res } = await this.$http.post('login', this.loginForm)
-        // console.log(res)
+        const { data: res } = await this.$http.post('user/login', this.loginForm)
+        console.log(res)
         if (res.meta.status !== 200) return this.$message.error('登录失败')
         this.$message.success('登录成功')
         // 1、将登陆成功之后的token, 保存到客户端的sessionStorage中; localStorage中是持久化的保存
         //   1.1 项目中出现了登录之外的其他API接口，必须在登陆之后才能访问
         //   1.2 token 只应在当前网站打开期间生效，所以将token保存在sessionStorage中
-        window.sessionStorage.setItem('token', res.data.token)
+        // window.sessionStorage.setItem('token', res.data.token)
         // 2、通过编程式导航跳转到后台主页, 路由地址为：/home
         this.$router.push('/home')
       })
@@ -90,7 +89,7 @@ export default {
 /* // lang="less" 支持less格式
 // scoped vue的指令，只在当前组件生效 */
 .login_container {
-  background-color: #2b4b6b;
+  background-color: #F5F5F5;
   height: 100%;
 }
 .login_box {
@@ -132,7 +131,7 @@ export default {
 }
 .btns {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 .info {
   font-size: 13px;
